@@ -49,6 +49,8 @@ Dimensions of W_O -> number_of_heads * d_v x embedding_dim
 projected_delta_change = delta_change @ W_O -> to get delta_e to the same dimension as context vector (embedding matrix)
 Context vector -> E + delta_e -> Final vector with updated self-attention scores
 
+IMPORTANT: Always remember that the dimension of input embeddings matrix should be equal to the output delta_V which is added to context vector.
+
 Multi Headed Attention
 
 Each head has its own set of learnable weight matrices W_Q, W_K, and W_V
