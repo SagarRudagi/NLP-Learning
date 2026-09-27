@@ -1,6 +1,9 @@
 # take data -> tokens -> sort -> to integers
 # 
 import torch
+import torch.nn as nn
+from torch.nn import functional as F
+torch.manual_seed(1337)
 
 with open('input.txt', encoding='utf-8') as f:
     text = f.read()
@@ -33,24 +36,36 @@ def get_batch(split):
     y = torch.stack([data[i+1:i+block_size+1] for i in ix])
     return x, y
 
-x, y = get_batch('train')
-print("Context Size: ", x.shape)
-print("Context: ", x)
-print("Target Size: ", y.shape)
-print("Target: ", y)
+xb, yb = get_batch('train')
+print("Context Size: ", xb.shape)
+print("Context: ", xb)
+print("Target Size: ", yb.shape)
+print("Target: ", yb)
 
 for b in range(batch_size):
     for t in range(block_size):
-        context = x[b, :t+1]
-        target = y[b,t]
+        context = xb[b, :t+1]
+        target = yb[b,t]
         print(f'When Context: {context.tolist()}, Target: {target}')
 
-# x = train_data[:block_size]
-# y = train_data[1:block_size+1]
-
-# for i in range(block_size):
-#     context = x[:i+1]
-#     target = y[i]
-#     print(f'When Context: {context}, Target: {target}')
 
 
+class BigramLanguageModel(nn.Module):
+    def __init__(self, vocab_size):
+        super().__init__()
+        self.token_embedding_table = nn.Embedding(vocab_size, vocab_size)
+
+    def forward(self, idx, targets):
+        # idx and targets are both of shape (B, T) where B is batch size and T is block size
+        logits = self.token_embedding_table(idx) # (B, T, C) where C is vocab_size
+        B, T, C = logits.shape
+        logits = logits.view(B*T, C)
+        targets = targets.view(B*T)
+        loss = F.cross_entropy(logits, targets)
+        return logits, loss
+
+model = BigramLanguageModel(vocab_size)
+logits, loss = model(xb,yb)
+print("Output Size: ", logits.shape)
+print("Loss: ", loss)
+# print("Output: ", logits)
