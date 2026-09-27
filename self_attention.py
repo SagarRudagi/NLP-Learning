@@ -40,6 +40,10 @@ Attention scores of the masked positions -> negative infinity before applying th
 
 Attention weights -> softmax(Attention scores)
 Output -> Attention weights * V -> delta_e (change in embedding)
+
+In Multi-Head Attention, you get many delta changes (one from each head), which are then concatenated and projected using W_O to form the final delta change that is added to the context vector.
+Concatenation of delta_v(s) means combining or stacking the outputs from each attention head along the feature dimension to form a single matrix that can then be projected using W_O.
+
 Now comes W_O -> W_O is the learnable weight matrix for the output of the attention mechanism
 Dimensions of W_O -> number_of_heads * d_v x embedding_dim
 projected_delta_change = delta_change @ W_O -> to get delta_e to the same dimension as context vector (embedding matrix)
