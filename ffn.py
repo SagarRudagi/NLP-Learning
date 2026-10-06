@@ -31,3 +31,14 @@ ffn = torch.nn.Sequential(
     torch.nn.GELU(),
     torch.nn.Linear(2048, 512)
 )
+
+
+""" Important Note: 
+During decoder inference, in the output block, you typically send the output of decoder blocks to FFN and then 
+softmax. During inference, decoder works as autoregressive in nature. So you send the previous predicted token as 
+input to the next decoder. The first token is always a special start-of-sequence token. In the output block of the 
+decoder, in the final FFN and softmax layer (Check the decoder diagram in Attention is all you need paper), while 
+predicting the next token, it takes only the previous one token as input and not all the previous generated tokens.
+All previous tokens are fed to the start of the decoder, but the final FFN takes only the last predicted token as input.
+
+"""
