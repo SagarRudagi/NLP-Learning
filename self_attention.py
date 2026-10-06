@@ -123,4 +123,23 @@ print("Shape of embedding matrix after attention:", embedding_matrix_attention.s
 print("Embedding matrix after attention:", embedding_matrix_attention)
 
 
+"""
+# Cross Attention - Happens in decoder section
+This is basically used while comparing two different sequences where the attention mechanism 
+allows one sequence (the query) to attend to another sequence (the key-value pairs). So the key and value matrices
+come from the encoder and the query comes from the decoder. You calculate the attention scores using the query vector
+from the decoder multiplied by the key vector from the encoder and then applying a softmax to get the attention weights. 
+Then this is multiplied by the value vector from the encoder to get the final output of the cross-attention mechanism.
+
+Basically,
+
+Attention(Q, K, V) = Softmax((Q @ K.T) / sqrt(d_k)) @ V
+
+Here,
+Q -> decoder sequence multiplied by the query weight matrix
+K -> encoder sequence multiplied by the key weight matrix
+V -> encoder sequence multiplied by the value weight matrix
+
+"""
+
 
