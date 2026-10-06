@@ -101,6 +101,7 @@ print("Shape of attention scores:", attention_scores.shape)
 # Masking the attention scores (optional step, usually used in transformers to prevent attending to certain positions)
 # Lets make those values in negative infinity where we want to mask the attention scores
 # Example: Masking the upper triangular part of the attention scores for causal attention (prevent attending to future positions)
+# This is one of the most important steps during inference in decoders 
 
 if MASKING:
     mask = torch.triu(torch.ones(seq_length, seq_length), diagonal=1).bool()
