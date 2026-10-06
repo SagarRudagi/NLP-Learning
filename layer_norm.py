@@ -60,7 +60,7 @@ for i in range(input_batch.shape[0]):
             mean and variance for that row and then scaling and shifting it using gamma and beta respectively for 
             each feature dimension"""
 
-            input_batch[i][j] = gamma[j] * (input_batch[i][j] - mean) / torch.sqrt(variance + 1e-5) + beta[j]
+            input_batch[i][j] = (gamma[j] * (input_batch[i][j] - mean) / torch.sqrt(variance + 1e-5)) + beta[j]
 
 # Through pytorch implementation, we can achieve the same normalization using the built-in LayerNorm function.
 # input_batch = torch.nn.LayerNorm(input_batch.shape[1])(input_batch)

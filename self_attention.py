@@ -126,19 +126,21 @@ print("Embedding matrix after attention:", embedding_matrix_attention)
 """
 # Cross Attention - Happens in decoder section
 This is basically used while comparing two different sequences where the attention mechanism 
-allows one sequence (the query) to attend to another sequence (the key-value pairs). So the key and value matrices
-come from the encoder and the query comes from the decoder. You calculate the attention scores using the query vector
-from the decoder multiplied by the key vector from the encoder and then applying a softmax to get the attention weights. 
-Then this is multiplied by the value vector from the encoder to get the final output of the cross-attention mechanism.
+allows one sequence (the query) to attend to another sequence (the key-value pairs). So the final output from come 
+from the encoder and the input of the decoder comes from the decoder. The decoder has its own Q,K,V matrices.
+The output of the encoder is multiplied with the key and value weight matrices to form the K and V vectors. 
+The input of decoder is multiplied with the query weight matrix to form the Q vector. Then the query of decoder is 
+multiplied with the key vectors from the encoder to compute the attention scores. The resulting attention weights 
+are then multiplied with the value vectors from the encoder to produce the final output.
 
-Basically,
 
-Attention(Q, K, V) = Softmax((Q @ K.T) / sqrt(d_k)) @ V
+
+Attention(Q_d, K_e, V_e) = Softmax((Q_d @ K_e.T) / sqrt(d_k)) @ V_e
 
 Here,
-Q -> decoder sequence multiplied by the query weight matrix
-K -> encoder sequence multiplied by the key weight matrix
-V -> encoder sequence multiplied by the value weight matrix
+Q_d -> decoder sequence multiplied by the query weight matrix
+K_e -> encoder sequence multiplied by the key weight matrix
+V_e -> encoder sequence multiplied by the value weight matrix
 
 """
 
