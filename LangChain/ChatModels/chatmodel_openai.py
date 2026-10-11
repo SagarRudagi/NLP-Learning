@@ -7,11 +7,7 @@ load_dotenv()
 model = ChatOpenAI(model="gpt-4") #, temperature=0, max_tokens=100)
 
 """
-Temperature guide:
-Factual Answers - 0.0 - 0.3
-Balanced response - 0.4 - 0.7
-Creative writing, storytelling - 0.8 - 1.2
-Maximum randomness - 1.5+
+temperature -> controls the randomness of the model's output. Lower values make the output more deterministic, while higher values increase creativity.
 
 max_tokens -> number of tokens to generate in the response
 """
