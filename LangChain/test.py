@@ -1,13 +1,4 @@
-"""
-Brief explanation:
-This tiny script checks whether the LangChain package is installed and prints the version
-currently available in the environment.
+video_url = "https://www.youtube.com/watch?v=wjZofJX0v4M&list=PLZHQObOWTQDN52m7Y21ePrTbvXkPaWVSg&index=8&t=1s"
 
-Author's note:
-This utility is useful as a quick environment sanity check before running larger LangChain examples.
-"""
-
-import langchain
-
-# Print the installed LangChain version to confirm the environment is set up correctly.
-print(langchain.__version__)
+video_id = video_url.split("v=")[1].split("&list")[0]
+print(video_id)
